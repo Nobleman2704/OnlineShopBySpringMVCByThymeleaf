@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+    <style>
+        div{
+            margin-left: 35%;
+            margin-top: 5%;
+        }
+        select {
+            padding: 10px 30px;
+            margin: 1px 10px;
+            border-radius: 15px;
+            border: none;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            color: #333;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            background-color: #54575a;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        input {
+            padding: 10px 30px;
+            border-radius: 15px;
+            border: none;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            color: #333;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        body{
+            background-color: lightslategray;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <!--/*@thymesVar id="product" type="uz.jk.domain.entity.product.ProductEntity"*/-->
+    <form th:action="@{/product/update/{id}(id=${product.id})}" method="post" th:object="${product}">
+        <label> Old name: <p th:text="${product.name}"></p>
+            <input type="text" required placeholder="name" name="name">
+        </label><br><br> Old description: <p th:text="${product.description}"></p>
+        <label>
+            <input type="text" required placeholder="description" name="description">
+        </label><br><br> Old price: <p th:text="${product.price}"></p>
+        <label>
+            <input type="number" required placeholder="price" min="1" name="price">
+        </label>
+        <label> <br><br> Old category: <p th:text="${product.category}"></p>
+            <select name="category">
+                <option value="GADGET">GADGET</option>
+                <option value="PHONE">PHONE</option>
+                <option value="LAPTOP">LAPTOP</option>
+            </select>
+        </label>
+        <button>Update</button>
+    </form>
+</div>
+</body>
+</html>

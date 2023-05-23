@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+        table th {
+            background-color: #3b3e40;
+            color: #fff;
+            padding: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid #ddd;
+        }
+        table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        select {
+            padding: 10px 30px;
+            margin: 1px 10px;
+            border-radius: 15px;
+            border: none;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            color: #333;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            background-color: chocolate;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        input {
+            padding: 10px 30px;
+            border-radius: 15px;
+            border: none;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            color: #333;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body style="background-color: slategray">
+
+<form th:action="@{/product/add_product}" method="post" th:object="${product}">
+    <label><b>Product name:</b>
+        <input style="margin-left: 39px" type="text" required placeholder="name" name="name"><br>
+    </label><br>
+    <label><b>Product description:</b>
+        <input type="text" required placeholder="description" name="description"><br>
+    </label><br>
+    <label><b>Product number:</b>
+        <input style="margin-left: 22px" type="number" required placeholder="price" min="1" name="price"><br>
+    </label><br>
+    <label><b>Product category:</b>
+        <select style="margin-left: 22px" name="category">
+            <option value="GADGET">GADGET</option>
+            <option value="PHONE">PHONE</option>
+            <option value="LAPTOP">LAPTOP</option>
+        </select>
+    </label>
+    <button>Add</button>
+</form>
+<br>
+<p th:text="${message}"></p>
+<br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody th:each="products: ${products}">
+    <tr>
+        <!--/*@thymesVar id="products" type="uz.jk.domain.entity.product.ProductEntity"*/-->
+        <td th:text="${products.id}"></td>
+        <td th:text="${products.name}"></td>
+        <td th:text="${products.description}"></td>
+        <td th:text="${products.price}"></td>
+        <td th:text="${products.category}"></td>
+        <td th:text="${products.createdDate}"></td>
+        <td th:text="${products.updatedDate}"></td>
+        <td>
+            <button style="width: 100%"><a th:href="@{/product/update/{id}(id=${products.id})}">Edit</a></button>
+        </td>
+        <td>
+            <button style="width: 100%"><a th:href="@{/product/delete/{id}(id=${products.id})}">Delete</a></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<th:block th:each="page : ${#numbers.sequence(0, pages)}">
+    <a th:href="@{/page/get_seller_products_by_page/{page}(page=${page})}" th:text="${page+1}"></a>
+</th:block>
+</body>
+</html>

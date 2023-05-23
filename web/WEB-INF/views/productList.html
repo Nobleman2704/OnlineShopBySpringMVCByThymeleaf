@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>description</th>
+        <th>maker</th>
+        <th>price</th>
+        <th>category</th>
+        <th>create date</th>
+        <th>update date</th>
+        <th>status</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    </thead>
+    <tbody th:each="product: ${products}">
+    <tr>
+        <!--/*@thymesVar id="products" type="org.example.model.dto.product.ProductReadDto"*/-->
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.maker}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.category}"></td>
+        <td th:text="${product.createddate}"></td>
+        <td th:text="${product.updateddate}"></td>
+        <td th:text="${product.status}"></td>
+        <td>
+            <button style="width: 100%"><a th:href="@{/update-product/{id}(id=${product.id})}">Edit</a></button>
+        </td>
+        <td>
+            <button style="width: 100%"><a th:href="@{/delete-product/{id}(id=${product.id})}">Delete</a></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

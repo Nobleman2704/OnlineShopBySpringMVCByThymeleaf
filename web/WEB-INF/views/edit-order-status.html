@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit order status</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      color: #333;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      text-align: left;
+      background-color: #f2f2f2;
+    }
+    table th {
+      background-color: cadetblue;
+      color: #fff;
+      padding: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border: 1px solid #ddd;
+    }
+    table td {
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: lightyellow;
+    }
+    select{
+      padding: 8px 10px;
+      margin: 20px 1%;
+      border-radius: 20px;
+      border: none;
+      background-color: skyblue;
+      font-size: 14px;
+      color: #333;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    button {
+      background-color: olive;
+      color: #fff;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+<p th:text="${message}"></p>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Product name</th>
+    <th>Product description</th>
+    <th>Price</th>
+    <th>Customer name</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Created</th>
+    <th>Updated</th>
+    <th>Change order status</th>
+  </tr>
+  </thead>
+  <tbody th:each="order :${orders}">
+      <tr>
+        <!--/*@thymesVar id="order" type="uz.jk.domain.entity.order.OrderEntity"*/-->
+        <td th:text="${order.products.name}"></td>
+        <td th:text="${order.products.description}"></td>
+        <td th:text="${order.products.price}"></td>
+        <td th:text="${order.users.name}"></td>
+        <td th:text="${order.amount}"></td>
+        <td th:text="${order.status}"></td>
+        <td th:text="${order.createdDate}"></td>
+        <td th:text="${order.updatedDate}"></td>
+        <td>
+          <form th:action="@{/order/edit_order_status}" method="post">
+            <input type="hidden" th:value="${order.id}" name="id">
+            <select name="status"> //SHIPPING, RETURNED, FAILED
+              <option value="SHIPPING">SHIPPING</option>
+              <option value="RETURNED">RETURNED</option>
+              <option value="FAILED">FAILED</option>
+              <option value="DELIVERED">DELIVERED</option>
+            </select>
+            <button>Change</button>
+          </form>
+        </td>
+      </tr>
+  </tbody>
+</table>
+<br>
+<th:block th:each="page : ${#numbers.sequence(0, pages)}">
+  <a th:href="@{/page/get_seller_orders_by_page/{page}(page=${page})}" th:text="${page+1}"></a>
+</th:block>
+</body>
+</html>
